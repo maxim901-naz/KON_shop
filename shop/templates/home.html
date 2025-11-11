@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+    {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    {% include "header.html" %}
+    <div class = 'cont'>
+    <main>
+        <h1> Добро пожаловать на сайт нашего магазина KON_shop </h1>
+        <p> В нашем магазине вы сможете найти любую одежду которая вам понравилась </p>
+        
+    </main>
+</div>
+<script>
+    function toggleMenu() {
+        document.querySelector(".nav").classList.toggle("show");
+    }
+    
+</script>
+
+</body>
+</html>

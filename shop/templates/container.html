@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина</title>
+    {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    {% include "header.html" %}
+    <h1>Корзина</h1>
+
+    {% if cart.items.all %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Товар</th>
+                    <th>Количество</th>
+                    <th>Цена</th>
+                    <th>Удалить</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart.items.all %}
+                    <tr>
+                        <td>{{ item.item.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.total_price }} руб.</td>
+                        <td>
+                            <a href="{% url 'remove_from_cart' item.item.id %}">Удалить</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p><strong>Общая сумма: {{ cart.total_price }} руб.</strong></p>
+        <a href="{% url 'clear_cart' %}" class = "btn a">Очистить корзину</a>
+    {% else %}
+        <p>Ваша корзина пуста.</p>
+    {% endif %}
+
+    <a href="{% url 'item_list' %}" class = "btn b">← Вернуться к покупкам</a>
+</body>
+</html>
