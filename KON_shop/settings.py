@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-n06g@!ws6+_5h1v=q5$8ln5%ks9-f+a347l#(z@!dfg9*@@m&-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -146,3 +146,5 @@ LOGIN_URL = "/login/"
 # ALLOWED_HOSTS = ['*']
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+import django_heroku
+django_heroku.settings(locals())
