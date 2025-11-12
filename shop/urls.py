@@ -1,8 +1,7 @@
 from django.urls import path
 from . import views
 from .views import cart_view, add_to_cart, remove_from_cart, clear_cart
-from django.conf import settings
-from django.conf.urls.static import static
+
 urlpatterns = [
     path('', views.home, name='home'),
     path('items/', views.item_list, name='item_list'),
@@ -13,5 +12,5 @@ urlpatterns = [
     path("cart/clear/", clear_cart, name="clear_cart"),
 ]
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
