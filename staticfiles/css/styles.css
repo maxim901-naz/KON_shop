@@ -21,17 +21,29 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+/* Хедер */
 .header {
     background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    padding: 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    top: 0;
+    position: sticky;
+    z-index: 1000;
+}
+
+.header .cont {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
     padding: 15px 30px;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    top: 0;
-    color: #f39c12;
-    position: sticky;
-    z-index: 1000;
 }
 
 .header .logo {
@@ -41,13 +53,29 @@ body {
 }
 
 .header .logo img {
-    height: 120px;
+    height: 60px;
     border-radius: 8px;
     transition: transform 0.3s ease;
 }
 
+.header .logo h2 {
+    color: #f39c12;
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
 .header .logo img:hover {
     transform: scale(1.05);
+}
+
+/* Бургер-меню */
+.burger-menu {
+    display: none;
+    font-size: 1.5rem;
+    color: #2ecc71;
+    cursor: pointer;
+    padding: 10px;
 }
 
 .nav ul {
@@ -91,6 +119,7 @@ body {
     left: 100%;
 }
 
+/* Списки */
 ul li {
     margin: 20px 0;
     padding: 20px;
@@ -107,6 +136,7 @@ ul li:hover {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
+/* Таблицы */
 table {
     width: 90%;
     margin: 30px auto;
@@ -144,6 +174,7 @@ tr:nth-child(even):hover {
     background-color: rgba(52, 152, 219, 0.2);
 }
 
+/* Параграфы */
 p {
     font-size: 28px;
     color: #2ecc71;
@@ -156,6 +187,7 @@ p {
     font-weight: 600;
 }
 
+/* Кнопки */
 .btn {
     display: inline-block;
     padding: 12px 25px;
@@ -177,75 +209,31 @@ p {
     box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
 }
 
-/* Адаптивность */
-@media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        gap: 15px;
-        padding: 15px;
-    }
-    
-    .nav ul {
-        flex-direction: column;
-        gap: 10px;
-        width: 100%;
-    }
-    
-    .nav a {
-        display: block;
-        text-align: center;
-    }
-    
-    table {
-        width: 100%;
-        font-size: 14px;
-    }
-    
-    .cont {
-        width: 95%;
-        padding: 20px;
-        margin: 15px auto;
-    }
-    
-    p {
-        font-size: 22px;
-        padding: 15px;
-    }
-}
-
-/* Анимации */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.cont {
-    animation: fadeIn 0.6s ease-out;
-}
-
-/* Кастомный скроллбар */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
+.btn-primary {
     background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-    border-radius: 10px;
+    color: #ffffff;
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+.btn-secondary {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: #ffffff;
+}
+
+.btn-large {
+    padding: 15px 30px;
+    font-size: 1.1rem;
+}
+
+.btn-disabled {
+    background: #bdc3c7 !important;
+    color: #7f8c8d !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.btn-icon {
+    margin-right: 8px;
 }
 
 /* Каталог */
@@ -360,15 +348,6 @@ p {
     margin-top: 15px;
 }
 
-.btn-icon {
-    margin-right: 8px;
-}
-
-.btn-disabled {
-    background: #bdc3c7 !important;
-    cursor: not-allowed !important;
-}
-
 .empty-state {
     text-align: center;
     padding: 60px 20px;
@@ -430,11 +409,6 @@ p {
 .hero-actions {
     display: flex;
     gap: 20px;
-}
-
-.btn-large {
-    padding: 15px 30px;
-    font-size: 1.1rem;
 }
 
 .hero-image img {
@@ -569,6 +543,12 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.quantity-btn:hover {
+    background: #ecf0f1;
+    transform: scale(1.1);
 }
 
 .quantity {
@@ -581,6 +561,11 @@ p {
     color: #e74c3c;
     text-decoration: none;
     font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.remove-btn:hover {
+    color: #c0392b;
 }
 
 .cart-summary {
@@ -657,11 +642,88 @@ p {
     font-size: 1.1rem;
 }
 
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cont {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Кастомный скроллбар */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+}
+
 /* Адаптивность */
 @media (max-width: 768px) {
+    .header .cont {
+        padding: 10px 15px;
+        flex-wrap: wrap;
+    }
+    
+    .burger-menu {
+        display: block;
+        order: 2;
+    }
+    
+    .nav {
+        display: none;
+        width: 100%;
+        order: 3;
+        margin-top: 15px;
+    }
+    
+    .nav.show {
+        display: block;
+    }
+    
+    .nav ul {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+    
+    .nav a {
+        display: block;
+        text-align: center;
+        padding: 12px;
+    }
+    
+    .header .logo h2 {
+        font-size: 1.5rem;
+    }
+    
+    .header .logo img {
+        height: 50px;
+    }
+    
     .hero-section {
         grid-template-columns: 1fr;
         text-align: center;
+        gap: 30px;
     }
     
     .hero-actions {
@@ -684,5 +746,58 @@ p {
     .product-info-small {
         flex-direction: column;
         text-align: center;
+        gap: 10px;
+    }
+    
+    table {
+        width: 100%;
+        font-size: 14px;
+    }
+    
+    .cont {
+        width: 95%;
+        padding: 20px;
+        margin: 15px auto;
+    }
+    
+    p {
+        font-size: 22px;
+        padding: 15px;
+    }
+    
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .page-title {
+        font-size: 2rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header .logo h2 {
+        font-size: 1.3rem;
+    }
+    
+    .header .logo img {
+        height: 40px;
+    }
+    
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .btn-large {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+    
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
     }
 }
