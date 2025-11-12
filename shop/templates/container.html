@@ -3,44 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Корзина</title>
+    <title>Корзина - KON_shop</title>
     {% load static %}
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     {% include "header.html" %}
-    <h1>Корзина</h1>
+    
+    <div class="cont">
+        <div class="cart-header">
+            <h1 class="page-title">Ваша корзина</h1>
+            <div class="cart-stats">
+                <span class="items-count">{{ cart.items.count }} товаров</span>
+            </div>
+        </div>
 
-    {% if cart.items.all %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Товар</th>
-                    <th>Количество</th>
-                    <th>Цена</th>
-                    <th>Удалить</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in cart.items.all %}
-                    <tr>
-                        <td>{{ item.item.name }}</td>
-                        <td>{{ item.quantity }}</td>
-                        <td>{{ item.total_price }} руб.</td>
-                        <td>
-                            <a href="{% url 'remove_from_cart' item.item.id %}">Удалить</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <p><strong>Общая сумма: {{ cart.total_price }} руб.</strong></p>
-        <a href="{% url 'clear_cart' %}" class = "btn a">Очистить корзину</a>
-    {% else %}
-        <p>Ваша корзина пуста.</p>
-    {% endif %}
+        {% if cart.items.all %}
+        <div class="cart-container">
+            <div class="cart-items">
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Товар</th>
+                            <th>Цена</th>
+                            <th>Количество</th>
+                            <th>Сумма</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart.items.all %}
+                        <tr class="cart-item">
+                            <td class="product-cell">
+                                <div class="product-info-small">
+                                    <img src="{{ item.item.image.url }}" alt="{{ item.item.name }}" class="product-thumb">
+                                    <div class="product-details">
+                                        <h4>{{ item.item.name }}</h4>
+                                        <p class="product-sku">Артикул: {{ item.item.id }}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="price-cell">${{ item.item.price }}</td>
+                            <td class="quantity-cell">
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn">-</button>
+                                    <span class="quantity">{{ item.quantity }}</span>
+                                    <button class="quantity-btn">+</button>
+                                </div>
+                            </td>
+                            <td class="total-cell">${{ item.total_price }}</td>
+                            <td class="actions-cell">
+                                <a href="{% url 'remove_from_cart' item.item.id %}" class="remove-btn" title="Удалить">
+                                    🗑️
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
-    <a href="{% url 'item_list' %}" class = "btn b">← Вернуться к покупкам</a>
+            <div class="cart-summary">
+                <div class="summary-card">
+                    <h3>Итог заказа</h3>
+                    <div class="summary-row">
+                        <span>Товары ({{ cart.items.count }})</span>
+                        <span>${{ cart.total_price }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Доставка</span>
+                        <span class="free-shipping">Бесплатно</span>
+                    </div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-row total">
+                        <span>Общая сумма</span>
+                        <span>${{ cart.total_price }}</span>
+                    </div>
+                    
+                    <button class="btn btn-large btn-primary checkout-btn">
+                        Оформить заказ
+                    </button>
+                    
+                    <div class="cart-actions">
+                        <a href="{% url 'clear_cart' %}" class="btn btn-secondary clear-cart">
+                            Очистить корзину
+                        </a>
+                        <a href="{% url 'item_list' %}" class="btn btn-secondary continue-shopping">
+                            ← Продолжить покупки
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="empty-cart">
+            <div class="empty-icon">🛒</div>
+            <h2>Ваша корзина пуста</h2>
+            <p>Добавьте товары, которые вам понравились</p>
+            <a href="{% url 'item_list' %}" class="btn btn-large btn-primary">
+                Начать покупки
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector(".nav").classList.toggle("show");
+        }
+
+        // Обновление количества товаров
+        document.querySelectorAll('.quantity-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Здесь можно добавить логику обновления количества
+                console.log('Изменение количества');
+            });
+        });
+    </script>
 </body>
 </html>
