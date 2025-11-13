@@ -10,81 +10,104 @@
     <link rel="stylesheet" href="{% static 'css/stylesfooter.css' %}">
 </head>
 <body>
-    {% include "header.html" %}
+    <body>
+        {% include "header.html" %}
+        
+        <div class="cont">
+            <div class="page-header">
+                <h1 class="page-title">Корзина покупок</h1>
+            </div>
     
-    <div class="cont">
-        <div class="page-header">
-            <h1 class="page-title">Корзина покупок</h1>
-        </div>
-
-        {% if cart.items.all %}
-        <div class="cart-container">
-            <table class="cart-table">
-                <thead>
-                    <tr>
-                        <th>Товар</th>
-                        <th>Количество</th>
-                        <th>Цена</th>
-                        <th>Действия</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in cart.items.all %}
-                    <tr>
-                        <td data-label="Товар" class="item-name">{{ item.item.name }}</td>
-                        <td data-label="Количество">
-                            <div class="item-quantity">
-                                <span class="quantity-badge">{{ item.quantity }}</span>
-                            </div>
-                        </td>
-                        <td data-label="Цена" class="item-price">{{ item.total_price }} руб.</td>
-                        <td data-label="Действия">
-                            <a href="{% url 'remove_from_cart' item.item.id %}" class="btn btn-danger">
-                                <span class="btn-icon">🗑️</span>
-                                Удалить
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-
-        <div class="cart-summary">
-            <div class="total-price">Общая сумма: {{ cart.total_price }} руб.</div>
-            <div class="cart-actions">
-                <a href="{% url 'clear_cart' %}" class="btn btn-danger">
-                    <span class="btn-icon">🧹</span>
-                    Очистить корзину
+            {% if cart.items.all %}
+            <div class="cart-container">
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Товар</th>
+                            <th>Количество</th>
+                            <th>Цена за шт.</th>
+                            <th>Общая цена</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart.items.all %}
+                        <tr>
+                            <td data-label="Товар" class="item-name">
+                                <div class="item-info">
+                                    <img src="{{ item.item.image.url }}" alt="{{ item.item.name }}" class="item-thumbnail">
+                                    <div>
+                                        <strong>{{ item.item.name }}</strong>
+                                        <br>
+                                        <small>{{ item.item.info|truncatewords:10 }}</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td data-label="Количество">
+                                <form method="post" action="{% url 'update_cart_quantity' item.item.id %}" class="quantity-form">
+                                    {% csrf_token %}
+                                    <div class="quantity-controls">
+                                        <button type="submit" name="quantity" value="{{ item.quantity|add:'-1' }}" class="qty-btn">-</button>
+                                        <span class="quantity">{{ item.quantity }}</span>
+                                        <button type="submit" name="quantity" value="{{ item.quantity|add:'1' }}" class="qty-btn">+</button>
+                                    </div>
+                                </form>
+                            </td>
+                            <td data-label="Цена за шт." class="item-price">{{ item.item.price }} руб.</td>
+                            <td data-label="Общая цена" class="item-total">{{ item.total_price }} руб.</td>
+                            <td data-label="Действия">
+                                <a href="{% url 'remove_from_cart' item.item.id %}" class="btn btn-danger">
+                                    <span class="btn-icon">🗑️</span>
+                                    Удалить
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+    
+            <div class="cart-summary">
+                <div class="total-price">Общая сумма: {{ cart.total_price }} руб.</div>
+                <div class="cart-actions">
+                    <a href="{% url 'clear_cart' %}" class="btn btn-danger">
+                        <span class="btn-icon">🧹</span>
+                        Очистить корзину
+                    </a>
+                    <a href="#" class="btn btn-primary">
+                        <span class="btn-icon">💳</span>
+                        Оформить заказ
+                    </a>
+                </div>
+            </div>
+    
+            {% else %}
+            <div class="empty-cart">
+                <div class="empty-cart-icon">🛒</div>
+                <h2>Ваша корзина пуста</h2>
+                <p>Добавьте товары, чтобы продолжить покупки</p>
+                <a href="{% url 'item_list' %}" class="btn btn-primary">
+                    <span class="btn-icon">←</span>
+                    Перейти к покупкам
                 </a>
-                <a href="#" class="btn btn-primary">
-                    <span class="btn-icon">💳</span>
-                    Оформить заказ
+            </div>
+            {% endif %}
+    
+            <div class="continue-shopping">
+                <a href="{% url 'item_list' %}" class="btn btn-secondary">
+                    <span class="btn-icon">←</span>
+                    Вернуться к покупкам
                 </a>
             </div>
         </div>
-
-        {% else %}
-        <div class="empty-cart">
-            <div class="empty-cart-icon">🛒</div>
-            <h2>Ваша корзина пуста</h2>
-            <p>Добавьте товары, чтобы продолжить покупки</p>
-        </div>
-        {% endif %}
-
-        <div class="continue-shopping">
-            <a href="{% url 'item_list' %}" class="btn btn-secondary">
-                <span class="btn-icon">←</span>
-                Вернуться к покупкам
-            </a>
-        </div>
-    </div>
-
-    <script>
-        function toggleMenu() {
-            document.querySelector(".nav").classList.toggle("show");
-        }
-    </script>
-    {% include "footer.html" %}
+    
+        {% include "footer.html" %}
+    
+        <script>
+            function toggleMenu() {
+                document.querySelector(".nav").classList.toggle("show");
+            }
+        </script>
+    </body>
 </body>
 </html>

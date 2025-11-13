@@ -4,6 +4,15 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 
+class Customer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone = models.CharField(max_length=20, blank=True)
+    address = models.TextField(blank=True)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.user.username
+
 class Category(models.Model):
     name = models.CharField(
         max_length=100, 
@@ -23,7 +32,7 @@ class Category(models.Model):
         verbose_name='Активна'
     )
     created_at = models.DateTimeField(
-        auto_now_add=True, 
+        default=timezone.now, 
         verbose_name='Создана'
     )
     
@@ -84,24 +93,24 @@ class Item(models.Model):
         else:
             return f"В наличии ({self.stock} шт.)"
 class Cart(models.Model):
-    session_key = models.CharField(max_length=40, null=True, blank=True)  # Для гостей 
+    customer = models.OneToOneField(Customer, on_delete=models.CASCADE,null=True, blank=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
+    @property
     def total_price(self):
-        """Общая сумма корзины"""
-        return sum(item.total_price() for item in self.items.all())
+        return sum(item.total_price for item in self.items.all())
 
-    def str(self):
-        return f"Корзина {self.session_key}" 
+    def __str__(self):
+        return f"Cart for {self.customer.user.username}"
 
 class CartItem(models.Model):
-    """Товары в корзине"""
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="items")
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items')
+    item = models.ForeignKey('Item', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
 
+    @property
     def total_price(self):
-        """Общая стоимость товара"""
-        return self.quantity * self.item.price
+        return self.item.price * self.quantity
 
-    def str(self):
-        return f"{self.item.name} ({self.quantity} шт.)"
+    def __str__(self):
+        return f"{self.quantity} x {self.item.name}"

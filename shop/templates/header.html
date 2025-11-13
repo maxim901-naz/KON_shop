@@ -1,22 +1,37 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/stylesheader.css' %}">
-<header class = "header">
-    <div class = "cont">
-        <div class = "logo">
-            <img src = "{% static 'images/logoH.png' %}" alt = "logo">
+<header class="header">
+    <div class="cont">
+        <div class="logo">
+            <img src="{% static 'images/logoH.png' %}" alt="logo">
             <h2> KON_shop </h2>
         </div>
         <div class="burger-menu" onclick="toggleMenu()">
             ☰
         </div>
         
-        <nav class = "nav">
+        <nav class="nav">
             <ul>
-                <li><a href = "{% url 'home' %}">Главная</a></li>
-                <li><a href = "{% url 'item_list' %}">Каталог</a></li>
-                <li><a href = "{% url 'info' %}">О нашем магазине</a></li>
-                <li><a href = "#">Контакты</a></li>
-                <li><a href = "{% url 'cart_view' %}">Корзина</a></li>
+                <li><a href="{% url 'home' %}">Главная</a></li>
+                <li><a href="{% url 'item_list' %}">Каталог</a></li>
+                <li><a href="{% url 'info' %}">О нашем магазине</a></li>
+                <li><a href="#">Контакты</a></li>
+                
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'cart_view' %}">Корзина</a></li>
+                <li class="user-menu">
+                    <a href="#" class="user-link">
+                        👤 {{ user.username }}
+                    </a>
+                    <div class="user-dropdown">
+                        <a href="{% url 'profile' %}">Профиль</a>
+                        <a href="{% url 'logout' %}">Выйти</a>
+                    </div>
+                </li>
+                {% else %}
+                <li><a href="{% url 'login' %}" class="login-btn">Войти</a></li>
+                <li><a href="{% url 'register' %}" class="register-btn">Регистрация</a></li>
+                {% endif %}
             </ul>
         </nav>
     </div>
