@@ -48,7 +48,57 @@
 <body>
     {% include "header.html" %}
     
-    <div class="cont">
+    
+        <div class="cont">
+            <!-- Хлебные крошки -->
+           
+            <!-- Текущая категория (если выбрана) -->
+            {% if category %}
+            <div class="current-category">
+                <h2>{{ category.name }}</h2>
+                {% if category.description %}
+                    <p>{{ category.description }}</p>
+                {% endif %}
+            </div>
+            {% endif %}
+    
+            <div class="page-header">
+                <h1 class="page-title">
+                    {% if category %}
+                        {{ category.name }}
+                    {% else %}
+                        Найдите свой идеальный образ
+                    {% endif %}
+                </h1>
+                <p class="page-subtitle">
+                    {% if category %}
+                        Коллекция "{{ category.name }}"
+                    {% else %}
+                        Исследуйте нашу коллекцию стильной одежды
+                    {% endif %}
+                </p>
+            </div>
+    
+            <!-- Фильтр по категориям -->
+            <div class="categories-filter">
+                <div class="categories-title">Категории:</div>
+                <div class="categories-list">
+                    <a href="{% url 'item_list' %}" 
+                       class="category-btn {% if not category %}active{% endif %}">
+                        Все товары
+                    </a>
+                    {% for cat in categories %}
+                    <a href="{% url 'category_detail' cat.slug %}" 
+                       class="category-btn {% if category and category.slug == cat.slug %}active{% endif %}">
+                        {{ cat.name }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        
+
+
+
         <div class="page-header">
             <h1 class="page-title">Найдите свой идеальный образ</h1>
             <p class="page-subtitle">Исследуйте нашу коллекцию стильной одежды</p>
@@ -57,6 +107,7 @@
         <div class="catalog-grid">
             {% for item in items %}
             <div class="product-card">
+                <a href="{% url 'item_detail' item.pk %}" style="text-decoration: none; color: inherit;">
                 <div class="product-image">
                     <img src="{{ item.image.url }}" alt="{{ item.name }}" loading="lazy">
                     {% if item.stock == 0 %}
@@ -74,7 +125,7 @@
                         <div class="price">${{ item.price }}</div>
                         <div class="stock">В наличии: {{ item.stock }} шт.</div>
                     </div>
-                    
+                </a> 
                     <div class="product-actions">
                         {% if item.stock > 0 %}
                         <a href="{% url 'add_to_cart' item.id %}" class="btn btn-primary">
@@ -95,7 +146,7 @@
             </div>
             {% endfor %}
         </div>
-    </div>
+    
 
     <script>
         function toggleMenu() {

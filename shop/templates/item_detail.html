@@ -1,0 +1,111 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ item.name }} - KON_shop</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/stylesdetail.css' %}">
+</head>
+<body>
+    {% include "header.html" %}
+    
+    <div class="container">
+        <!-- Хлебные крошки -->
+        <nav class="breadcrumb">
+            <a href="{% url 'item_list' %}">Главная</a>
+            <span>›</span>
+            {% if item.category %}
+                <a href="{% url 'category_detail' item.category.slug %}">{{ item.category.name }}</a>
+                <span>›</span>
+            {% endif %}
+            <span>{{ item.name }}</span>
+        </nav>
+
+        <!-- Детали товара -->
+        <div class="product-detail-container">
+            <!-- Изображение товара -->
+            <div class="product-image">
+                <img src="{{ item.image.url }}" alt="{{ item.name }}" loading="lazy">
+            </div>
+            
+            <!-- Информация о товаре -->
+            <div class="product-info">
+                <h1 class="product-title">{{ item.name }}</h1>
+                
+                <div class="product-price">{{ item.price }} руб.</div>
+                
+                <div class="stock-status {% if item.stock == 0 %}stock-out{% elif item.stock < 5 %}stock-low{% else %}stock-in{% endif %}">
+                    {% if item.stock == 0 %}
+                        ❌ Нет в наличии
+                    {% elif item.stock < 5 %}
+                        ⚠️ Осталось мало: {{ item.stock }} шт.
+                    {% else %}
+                        ✅ В наличии: {{ item.stock }} шт.
+                    {% endif %}
+                </div>
+                
+                {% if item.category %}
+                    <div class="product-category">
+                        <span>Категория:</span>
+                        <a href="{% url 'category_detail' item.category.slug %}" class="category-link">
+                            {{ item.category.name }}
+                        </a>
+                    </div>
+                {% endif %}
+                
+                <div class="product-description">
+                    <h3>Описание</h3>
+                    <p>{{ item.info }}</p>
+                </div>
+                
+                <!-- Кнопки действий -->
+                <div class="product-actions">
+                    {% if item.stock > 0 %}
+                    <a href="{% url 'add_to_cart' item.id %}" class="btn btn-primary">
+                        <span class="btn-icon">🛒</span>
+                        Добавить в корзину
+                    </a>
+                    {% else %}
+                    <button class="btn btn-disabled" disabled>
+                        <span class="btn-icon">⛔</span>
+                        Нет в наличии
+                    </button>
+                    {% endif %}
+                    <a href="{% url 'item_list' %}" class="btn btn-secondary">
+                        <span class="btn-icon">←</span>
+                        Назад к каталогу
+                    </a>
+                </div>
+                
+                <!-- Дополнительная информация -->
+                <div class="product-meta">
+                    <div class="meta-item">
+                        <div class="meta-icon">🚚</div>
+                        <div class="meta-title">Бесплатная доставка</div>
+                        <div class="meta-text">От 3000 рублей</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-icon">↩️</div>
+                        <div class="meta-title">Легкий возврат</div>
+                        <div class="meta-text">В течение 14 дней</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-icon">✅</div>
+                        <div class="meta-title">Гарантия качества</div>
+                        <div class="meta-text">Официальная гарантия</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector(".nav").classList.toggle("show");
+        }
+    </script>
+</body>
+</html>

@@ -10,6 +10,10 @@ urlpatterns = [
     path("cart/add/<int:item_id>/", add_to_cart, name="add_to_cart"),
     path("cart/remove/<int:item_id>/", remove_from_cart, name="remove_from_cart"),
     path("cart/clear/", clear_cart, name="clear_cart"),
+    path('category/<slug:slug>/', views.category_detail, name='category_detail'),
+    
+    # Детальная страница товара
+    path('item/<int:pk>/', views.item_detail, name='item_detail'),
 ]
 
 

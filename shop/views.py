@@ -3,9 +3,54 @@ from .models import Item, Cart, CartItem
 from django.contrib.auth.decorators import login_required
 
 
+
+from .models import Item, Category
+
 def item_list(request):
-    items = Item.objects.all()
-    return render(request,'item_list.html', {'items': items})
+    """
+    Главная страница - ВСЕ товары
+    URL: /
+    """
+    items = Item.objects.filter(is_available=True).select_related('category')
+    categories = Category.objects.filter(is_active=True)
+    
+    context = {
+        'items': items,
+        'categories': categories,
+        'title': 'Все товары'
+    }
+    return render(request, 'item_list.html', context)
+
+def category_detail(request, slug):
+    """
+    Товары определенной категории
+    URL: /category/slug/
+    """
+    category = get_object_or_404(Category, slug=slug, is_active=True)
+    items = Item.objects.filter(category=category, is_available=True)
+    categories = Category.objects.filter(is_active=True)
+    
+    context = {
+        'category': category,
+        'items': items,
+        'categories': categories,
+        'title': category.name
+    }
+    return render(request, 'item_list.html', context)
+
+def item_detail(request, pk):
+    """
+    Детальная страница товара
+    URL: /item/1/
+    """
+    item = get_object_or_404(Item, pk=pk, is_available=True)
+    categories = Category.objects.filter(is_active=True)
+    
+    context = {
+        'item': item,
+        'categories': categories,
+    }
+    return render(request, 'item_detail.html', context)
 
 def home(request):
     return render(request,"home.html")

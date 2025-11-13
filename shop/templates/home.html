@@ -40,6 +40,31 @@
 <body>
     
     {% include "header.html" %}
+
+    <div class="container">
+        <!-- Боковая панель с категориями -->
+        <aside class="sidebar">
+            <div class="categories">
+                <h3>Категории</h3>
+                <ul>
+                    <li>
+                        <a href="{% url 'item_list' %}" 
+                           {% if not category %}class="active"{% endif %}>
+                            Все товары
+                        </a>
+                    </li>
+                    {% for cat in categories %}
+                    <li>
+                        <a href="{% url 'category_detail' cat.slug %}"
+                           {% if category and category.slug == cat.slug %}class="active"{% endif %}>
+                            {{ cat.name }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </aside>
+
     <div class="cont">
         <main class="hero-section">
             <div class="hero-content">
