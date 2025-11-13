@@ -3,44 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Корзина</title>
+    <title>Корзина - KON_shop</title>
     {% load static %}
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stylescart.css' %}">
 </head>
 <body>
     {% include "header.html" %}
-    <h1>Корзина</h1>
+    
+    <div class="cont">
+        <div class="page-header">
+            <h1 class="page-title">Корзина покупок</h1>
+        </div>
 
-    {% if cart.items.all %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Товар</th>
-                    <th>Количество</th>
-                    <th>Цена</th>
-                    <th>Удалить</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in cart.items.all %}
+        {% if cart.items.all %}
+        <div class="cart-container">
+            <table class="cart-table">
+                <thead>
                     <tr>
-                        <td>{{ item.item.name }}</td>
-                        <td>{{ item.quantity }}</td>
-                        <td>{{ item.total_price }} руб.</td>
-                        <td>
-                            <a href="{% url 'remove_from_cart' item.item.id %}">Удалить</a>
+                        <th>Товар</th>
+                        <th>Количество</th>
+                        <th>Цена</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart.items.all %}
+                    <tr>
+                        <td data-label="Товар" class="item-name">{{ item.item.name }}</td>
+                        <td data-label="Количество">
+                            <div class="item-quantity">
+                                <span class="quantity-badge">{{ item.quantity }}</span>
+                            </div>
+                        </td>
+                        <td data-label="Цена" class="item-price">{{ item.total_price }} руб.</td>
+                        <td data-label="Действия">
+                            <a href="{% url 'remove_from_cart' item.item.id %}" class="btn btn-danger">
+                                <span class="btn-icon">🗑️</span>
+                                Удалить
+                            </a>
                         </td>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <p><strong>Общая сумма: {{ cart.total_price }} руб.</strong></p>
-        <a href="{% url 'clear_cart' %}" class = "btn a">Очистить корзину</a>
-    {% else %}
-        <p>Ваша корзина пуста.</p>
-    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-    <a href="{% url 'item_list' %}" class = "btn b">← Вернуться к покупкам</a>
+        <div class="cart-summary">
+            <div class="total-price">Общая сумма: {{ cart.total_price }} руб.</div>
+            <div class="cart-actions">
+                <a href="{% url 'clear_cart' %}" class="btn btn-danger">
+                    <span class="btn-icon">🧹</span>
+                    Очистить корзину
+                </a>
+                <a href="{% url 'checkout' %}" class="btn btn-primary">
+                    <span class="btn-icon">💳</span>
+                    Оформить заказ
+                </a>
+            </div>
+        </div>
+
+        {% else %}
+        <div class="empty-cart">
+            <div class="empty-cart-icon">🛒</div>
+            <h2>Ваша корзина пуста</h2>
+            <p>Добавьте товары, чтобы продолжить покупки</p>
+        </div>
+        {% endif %}
+
+        <div class="continue-shopping">
+            <a href="{% url 'item_list' %}" class="btn btn-secondary">
+                <span class="btn-icon">←</span>
+                Вернуться к покупкам
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector(".nav").classList.toggle("show");
+        }
+    </script>
 </body>
 </html>
