@@ -1,0 +1,107 @@
+{% load static %}
+<footer class="footer">
+    <div class="footer-container">
+        <!-- Основная часть футера -->
+        <div class="footer-main">
+            <!-- Колонка с информацией о магазине -->
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <img src="{% static 'images/logoH.png' %}" alt="KON_shop">
+                    <span class="footer-brand">KON_shop</span>
+                </div>
+                <p class="footer-description">
+                    Магазин стильной одежды и аксессуаров. Мы создаем моду, которая подчеркивает вашу индивидуальность и делает каждый день особенным.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="ВКонтакте">
+                        <span class="social-icon">📘</span>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Instagram">
+                        <span class="social-icon">📷</span>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Telegram">
+                        <span class="social-icon">✈️</span>
+                    </a>
+                    <a href="#" class="social-link" aria-label="WhatsApp">
+                        <span class="social-icon">💬</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Колонка с навигацией -->
+            <div class="footer-column">
+                <h3 class="footer-title">Магазин</h3>
+                <ul class="footer-links">
+                    <li><a href="{% url 'item_list' %}">Все товары</a></li>
+                    <li><a href="{% url 'category_detail' 'men' %}">Мужская одежда</a></li>
+                    <li><a href="{% url 'category_detail' 'women' %}">Женская одежда</a></li>
+                    <li><a href="{% url 'category_detail' 'accessories' %}">Аксессуары</a></li>
+                    <li><a href="#">Новинки</a></li>
+                    <li><a href="#">Распродажа</a></li>
+                </ul>
+            </div>
+
+            <!-- Колонка с клиентской службой -->
+            <div class="footer-column">
+                <h3 class="footer-title">Помощь</h3>
+                <ul class="footer-links">
+                    <li><a href="{% url 'info' %}">О магазине</a></li>
+                    <li><a href="#">Доставка и оплата</a></li>
+                    <li><a href="#">Возврат и обмен</a></li>
+                    <li><a href="#">Размерная сетка</a></li>
+                    <li><a href="#">Уход за одеждой</a></li>
+                    <li><a href="#">Частые вопросы</a></li>
+                </ul>
+            </div>
+
+            <!-- Колонка с контактами -->
+            <div class="footer-column">
+                <h3 class="footer-title">Контакты</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <div>
+                            <div class="contact-label">Телефон</div>
+                            <a href="tel:+78001234567" class="contact-link">8 (800) 123-45-67</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">✉️</span>
+                        <div>
+                            <div class="contact-label">Email</div>
+                            <a href="mailto:info@konshop.ru" class="contact-link">info@konshop.ru</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">🕒</span>
+                        <div>
+                            <div class="contact-label">Время работы</div>
+                            <div class="contact-text">Ежедневно 9:00-21:00</div>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">📍</span>
+                        <div>
+                            <div class="contact-label">Адрес</div>
+                            <div class="contact-text">г. Москва, ул. Примерная, д. 123</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Нижняя часть футера -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <div class="copyright">
+                    © 2024 KON_shop. Все права защищены.
+                </div>
+                <div class="footer-bottom-links">
+                    <a href="#">Политика конфиденциальности</a>
+                    <a href="#">Пользовательское соглашение</a>
+                    <a href="#">Карта сайта</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
