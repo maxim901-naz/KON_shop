@@ -1,31 +1,3 @@
-{% comment %} <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная страница</title>
-    {% load static %}
-    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body>
-    {% include "header.html" %}
-    <div class = 'cont'>
-    <main>
-        <h1> Добро пожаловать на сайт нашего магазина KON_shop </h1>
-        <p> В нашем магазине вы сможете найти любую одежду которая вам понравилась </p>
-        
-    </main>
-</div>
-<script>
-    function toggleMenu() {
-        document.querySelector(".nav").classList.toggle("show");
-    }
-    
-</script>
-
-</body>
-</html> {% endcomment %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="ru">
@@ -33,16 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KON_shop - Магазин стильной одежды</title>
-   
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'css/styleshome.css' %}">
     <link rel="stylesheet" href="{% static 'css/stylesfooter.css' %}">
 </head>
 <body>
-    
     {% include "header.html" %}
-
-    <div class="container">
+    
+    <div class="main-wrapper">
         <!-- Боковая панель с категориями -->
         <aside class="sidebar">
             <div class="categories">
@@ -66,75 +36,80 @@
             </div>
         </aside>
 
-    <div class="cont">
-        <main class="hero-section">
-            <div class="hero-content">
-                <h1 class="hero-title">Добро пожаловать в <span class="brand">KON_shop</span></h1>
-                <p class="hero-subtitle">Откройте для себя мир моды и стиля. Мы создаем одежду, которая подчеркивает вашу индивидуальность и делает каждый день особенным.</p>
-                
-                <div class="hero-features">
-                    <div class="feature">
-                        <span class="feature-icon">🚚</span>
-                        <span class="feature-text">Бесплатная доставка от $50</span>
+        <!-- Основной контент -->
+        <main class="main-content">
+            <div class="cont">
+                <section class="hero-section">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Добро пожаловать в <span class="brand">KON_shop</span></h1>
+                        <p class="hero-subtitle">Откройте для себя мир моды и стиля. Мы создаем одежду, которая подчеркивает вашу индивидуальность и делает каждый день особенным.</p>
+                        
+                        <div class="hero-features">
+                            <div class="feature">
+                                <span class="feature-icon">🚚</span>
+                                <span class="feature-text">Бесплатная доставка от $50</span>
+                            </div>
+                            <div class="feature">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">Гарантия качества</span>
+                            </div>
+                            <div class="feature">
+                                <span class="feature-icon">↩️</span>
+                                <span class="feature-text">Легкий возврат</span>
+                            </div>
+                        </div>
+                        
+                        <div class="hero-actions">
+                            <a href="{% url 'item_list' %}" class="btn btn-large btn-primary">
+                                Начать покупки
+                            </a>
+                            <a href="#collections" class="btn btn-large btn-secondary">
+                                Смотреть коллекции
+                            </a>
+                        </div>
                     </div>
-                    <div class="feature">
-                        <span class="feature-icon">✅</span>
-                        <span class="feature-text">Гарантия качества</span>
+                    
+                    <div class="hero-image">
+                        <img src="{% static 'images/moda.png' %}" alt="Модная одежда" loading="lazy">
                     </div>
-                    <div class="feature">
-                        <span class="feature-icon">↩️</span>
-                        <span class="feature-text">Легкий возврат</span>
+                </section>
+
+                <section id="collections" class="collections-section">
+                    <h2 class="section-title">Наши коллекции</h2>
+                    <div class="collections-grid">
+                        <div class="collection-card">
+                            <div class="collection-image">
+                                <img src="{% static 'images/Men.png' %}" alt="Мужская коллекция" loading="lazy">
+                            </div>
+                            <h3>Мужская одежда</h3>
+                            <p>Стиль и комфорт для современных мужчин</p>
+                        </div>
+                        <div class="collection-card">
+                            <div class="collection-image">
+                                <img src="{% static 'images/women.png' %}" alt="Женская коллекция" loading="lazy">
+                            </div>
+                            <h3>Женская одежда</h3>
+                            <p>Элегантность и утонченность в каждой детали</p>
+                        </div>
+                        <div class="collection-card">
+                            <div class="collection-image">
+                                <img src="{% static 'images/accessories-collection.jpg' %}" alt="Аксессуары" loading="lazy">
+                            </div>
+                            <h3>Аксессуары</h3>
+                            <p>Завершите ваш образ идеальными деталями</p>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="hero-actions">
-                    <a href="{% url 'item_list' %}" class="btn btn-large btn-primary">
-                        Начать покупки
-                    </a>
-                    <a href="#collections" class="btn btn-large btn-secondary">
-                        Смотреть коллекции
-                    </a>
-                </div>
-            </div>
-            
-            <div class="hero-image">
-                <img src="{% static 'images/moda.png' %}" alt="Модная одежда" loading="lazy">
+                </section>
             </div>
         </main>
-
-        <section id="collections" class="collections-section">
-            <h2 class="section-title">Наши коллекции</h2>
-            <div class="collections-grid">
-                <div class="collection-card">
-                    <div class="collection-image">
-                        <img src="{% static 'images/Men.png' %}" alt="Мужская коллекция" loading="lazy">
-                    </div>
-                    <h3>Мужская одежда</h3>
-                    <p>Стиль и комфорт для современных мужчин</p>
-                </div>
-                <div class="collection-card">
-                    <div class="collection-image">
-                        <img src="{% static 'images/women.png' %}" alt="Женская коллекция" loading="lazy">
-                    </div>
-                    <h3>Женская одежда</h3>
-                    <p>Элегантность и утонченность в каждой детали</p>
-                </div>
-                <div class="collection-card">
-                    <div class="collection-image">
-                        <img src="{% static 'images/accessories-collection.jpg' %}" alt="Аксессуары" loading="lazy">
-                    </div>
-                    <h3>Аксессуары</h3>
-                    <p>Завершите ваш образ идеальными деталями</p>
-                </div>
-            </div>
-        </section>
     </div>
+
+    {% include "footer.html" %}
 
     <script>
         function toggleMenu() {
             document.querySelector(".nav").classList.toggle("show");
         }
     </script>
-    {% include "footer.html" %}
 </body>
 </html>
